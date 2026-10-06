@@ -9,6 +9,8 @@
     "Codespace",
     "Codespaces",
     "devcontainer",
+    "GHEC",
+    "GHES",
     "Innersource",
     "InnerSource",
     "Kanban",
@@ -31,6 +33,7 @@
     "VCS",
     "DVCS",
     "relref",
-    "rerequested"
+    "rerequested",
+    "frontmatter"
   ]
 }

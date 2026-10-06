@@ -1,0 +1,39 @@
+title: "[Challenge Idea] "
+labels: ["challenge-idea"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for suggesting a new challenge mode! The community votes on ideas by upvoting them.
+        Browse existing ideas in the [Challenge Ideas](https://github.com/v-fidelusaleksander/ghcertified/discussions/categories/challenge-ideas) discussions.
+
+  - type: input
+    id: name
+    attributes:
+      label: Challenge Name
+      description: What would you call this challenge mode?
+      placeholder: e.g., "Speed Round", "Category Clash"
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Briefly describe the challenge mode and how it works.
+      placeholder: "Players race to answer as many questions as possible in 5 minutes..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: rules
+    attributes:
+      label: Rules & Mechanics
+      description: How does scoring work? What are the win/lose conditions?
+      placeholder: |
+        - 5 minute total time limit
+        - +10 points per correct answer
+        - -5 points per wrong answer
+        - Bonus points for streaks
+    validations:
+      required: false

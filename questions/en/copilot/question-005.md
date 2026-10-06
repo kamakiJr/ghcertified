@@ -1,0 +1,10 @@
+---
+question: "What are some of the principles of Prompt Engineering?"
+documentation: "https://docs.github.com/en/copilot/concepts/prompting/prompt-engineering"
+---
+
+- [x] Focus on a single, well-defined task
+- [x] Ensure instructions are detailed and explicit
+- [x] Provide rich context for AI
+- [ ] Write long, complex instructions
+> If you want Copilot to complete a complex or large task, break the task into multiple simple, small tasks.

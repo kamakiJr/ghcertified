@@ -1,0 +1,9 @@
+---
+question: "The tool that checks if a pull request introduces any dependencies with security vulnerabilities is called:"
+documentation: "https://docs.github.com/en/code-security/concepts/supply-chain-security/dependency-review"
+---
+
+- [x] Dependency Review
+- [ ] Dependabot Alerts
+- [ ] Dependabot Security Updates
+- [ ] Dependabot Version Updates

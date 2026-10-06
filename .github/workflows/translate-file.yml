@@ -19,10 +19,10 @@ on:
   workflow_dispatch:
     inputs:
       file:
-        description: 'File path to translate (e.g., content/en/questions/foundations/example.md)'
+        description: 'File path to translate (e.g., questions/en/foundations/example.md)'
         required: true
         type: string
-        default: 'content/en/questions/actions/question-029.md'
+        default: 'questions/en/actions/question-029.md'
       language_code:
         description: 'Target language code (e.g., pl, pt)'
         required: true
@@ -45,18 +45,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Build System Prompt
         id: build-system-prompt
-        uses: skills/action-text-variables@v3
+        uses: skills/action-text-variables@d277ce34621ab00a53db0517d18304a7032453c5 # v4.0.1
         with:
           template-file: .github/translation-system-prompt.md
           template-vars: |
             targetLanguage: ${{ inputs.language_name }}
 
       - name: Translate file
-        uses: FidelusAleksander/prompt-action@v1
+        uses: v-fidelusaleksander/prompt-action@5fd22d9e053d49a91cc7d014eddd622bf66b43ad # v2.0.0
         id: translate
         with:
           system-prompt: ${{ steps.build-system-prompt.outputs.updated-text }}
@@ -68,7 +68,7 @@ jobs:
           FILE="${{ inputs.file }}"
           LANG="${{ inputs.language_code }}"
 
-          TARGET_PATH="${FILE/content\/en/content\/$LANG}"
+          TARGET_PATH="${FILE/questions\/en/questions\/$LANG}"
           TARGET_DIR=$(dirname "$TARGET_PATH")
 
           mkdir -p "$TARGET_DIR"
@@ -77,9 +77,9 @@ jobs:
           TRANSLATED_TEXT: ${{ steps.translate.outputs.text }}
 
       - name: Commit changes
-        uses: EndBug/add-and-commit@v9
+        uses: EndBug/add-and-commit@cc9c08ba6c8df3b93a8f2db63e89b98368ae2ae8 # v11.1.1
         with:
-          add: "content/${{ inputs.language_code }}/**"
+          add: "questions/${{ inputs.language_code }}/**"
           message: "i18n: translate ${{ inputs.file }} to ${{ inputs.language_name }}"
           push: true
           new_branch: ${{ inputs.branch }}

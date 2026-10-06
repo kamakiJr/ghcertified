@@ -1,0 +1,10 @@
+---
+question: "How can you customize your advanced CodeQL scanning setup with additional CodeQL query suites?"
+documentation: "https://docs.github.com/en/code-security/reference/code-scanning/workflow-configuration-options"
+---
+
+- [x] By using a custom configuration file and defining additional queries there
+- [x] By defining the customizations in the CodeQL analysis GitHub Actions workflow as input parameters to the `github/codeql-action/init` action
+- [ ] By using the CodeQL CLI with a custom configuration file to run the analysis
+- [ ] By defining the customizations in the Security / Code scanning repository settings
+- [ ] By using the `github/codeql-customizations` GitHub Action

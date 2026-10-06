@@ -1,0 +1,138 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-mona-sans), -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, monospace;
+  --font-display: var(--font-mona-sans), -apple-system, BlinkMacSystemFont, sans-serif;
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-border-dark: var(--border-dark);
+  --color-destructive: var(--destructive);
+  --color-destructive-soft: var(--destructive-soft);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-primary-soft: var(--primary-soft);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-success-soft: var(--success-soft);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+  --color-cert-actions: var(--cert-actions);
+  --color-cert-foundations: var(--cert-foundations);
+  --color-cert-advanced-security: var(--cert-advanced-security);
+  --color-cert-agentic: var(--cert-agentic);
+  --color-cert-admin: var(--cert-admin);
+  --color-cert-copilot: var(--cert-copilot);
+  --color-hover-ring: var(--primary-soft);
+  --color-star: var(--star);
+  --color-star-glow: var(--star-glow);
+}
+
+/*
+ * Light theme palette — warm gray background, white cards.
+ * HSL values from reference design. Primary is GitHub-adjacent blue.
+ * "soft" variants = very light tinted backgrounds for feedback states.
+ */
+:root {
+  --background: hsl(40 14% 95%);
+  --foreground: hsl(0 0% 6%);
+  --card: hsl(0 0% 100%);
+  --card-foreground: hsl(0 0% 6%);
+  --popover: hsl(0 0% 100%);
+  --popover-foreground: hsl(0 0% 6%);
+  --primary: hsl(220 100% 49%);
+  --primary-foreground: hsl(0 0% 100%);
+  --primary-soft: hsl(222 100% 95%);
+  --secondary: hsl(40 14% 95%);
+  --secondary-foreground: hsl(0 0% 6%);
+  --muted: hsl(40 14% 95%);
+  --muted-foreground: hsl(0 0% 54%);
+  --accent: hsl(40 14% 95%);
+  --accent-foreground: hsl(0 0% 6%);
+  --destructive: hsl(0 72% 58%);
+  --destructive-foreground: hsl(0 0% 100%);
+  --destructive-soft: hsl(0 86% 96%);
+  --success: hsl(157 74% 41%);
+  --success-foreground: hsl(0 0% 100%);
+  --success-soft: hsl(157 60% 94%);
+  --warning: hsl(38 92% 50%);
+  --warning-foreground: hsl(0 0% 6%);
+  --border: hsl(40 11% 88%);
+  --border-dark: hsl(40 6% 80%);
+  --input: hsl(40 11% 88%);
+  --ring: hsl(220 100% 49%);
+  --radius: 14px;
+  --chart-1: hsl(220 100% 49%);
+  --chart-2: hsl(157 74% 41%);
+  --chart-3: hsl(38 92% 50%);
+  --chart-4: hsl(280 60% 50%);
+  --chart-5: hsl(15 80% 55%);
+  --sidebar: hsl(0 0% 98%);
+  --sidebar-foreground: hsl(240 5.3% 26.1%);
+  --sidebar-primary: hsl(240 5.9% 10%);
+  --sidebar-primary-foreground: hsl(0 0% 98%);
+  --sidebar-accent: hsl(240 4.8% 95.9%);
+  --sidebar-accent-foreground: hsl(240 5.9% 10%);
+  --sidebar-border: hsl(220 13% 91%);
+  --sidebar-ring: hsl(217.2 91.2% 59.8%);
+  --star: hsl(45 93% 47%);
+  --star-glow: hsl(45 93% 60%);
+}
+
+/*
+ * Certification track colors — semantic vars for cert-specific branding.
+ */
+:root {
+  --cert-actions: hsl(220 100% 55%);
+  --cert-foundations: hsl(157 74% 41%);
+  --cert-advanced-security: hsl(269 67% 52%);
+  --cert-agentic: hsl(187 85% 43%);
+  --cert-admin: hsl(27 90% 47%);
+  --cert-copilot: hsl(0 0% 6%);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+}

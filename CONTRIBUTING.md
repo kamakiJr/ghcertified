@@ -1,70 +1,79 @@
 # Contributing to ghcertified
 
->The easiest way to contribute is by [opening an issue](https://github.com/FidelusAleksander/ghcertified/issues/new/choose). No contribution is too small - we encourage you to report any typos, unclear questions or feature requests.
+> The easiest way to contribute is by [opening an issue](https://github.com/v-fidelusaleksander/ghcertified/issues/new/choose). No contribution is too small — we encourage you to report typos, unclear questions, or feature requests.
 
+## Add a new question
 
-<!-- MarkdownTOC autolink="true" -->
-- [Setting up the project](#setting-up-the-project)
-  - [Option 1: GitHub Codespaces](#option-1-github-codespaces)
-  - [Option 2: Local setup (traditional)](#option-2-local-setup-traditional)
-- [Content Changes](#content-changes)
-  - [Adding new question](#adding-new-question)
-  - [Updating existing content](#updating-existing-content)
-
-<!-- /MarkdownTOC -->
-
-## Setting up the project
-
-### Option 1: GitHub Codespaces
-
-A Codespace is an online development environment that runs in the cloud and is powered by Visual Studio Code where all dependencies for developing this project are already setup for you.
-
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/FidelusAleksander/ghcertified)
-
-Once the Codespace installation is complete you can start making [content changes](#content-changes). 
-
-Start the Hugo server to see your changes live at http://localhost:1313
-
-  ```bash
-  hugo server
-  ```
-
-### Option 2: Local setup (traditional)
-If you've decided to not use [GitHub Codespaces](https://codespaces.new/FidelusAleksander/ghcertified) but instead want to run the project locally, follow the steps below.
-1. [Fork](https://github.com/FidelusAleksander/ghcertified/fork) the repository
-2. Install [Hugo](https://gohugo.io/installation/) recommended version (0.145.0)
-
-3. Update the submodules to install the theme used in this project
-  ```bash
-  git submodule update --init --recursive
-  ```
-4. Start the Hugo server to see your changes live at http://localhost:1313
-  ```bash
-  hugo server
-  ```
-
-## Content Changes
-All of the site content in this repository is stored in [content/](https://github.com/FidelusAleksander/ghcertified/blob/master/content) directory and is written in markdown.
-
-### Adding new question
-
-> [!warning]
+> [!WARNING]
 > We do not support the inclusion of questions directly copied from official GitHub certification exams. Please only submit original questions and content that you have created.
 
-1) Run one of the following commands to add a new question file. Change `XXX` to the next available number.
+**1. [Fork](https://github.com/v-fidelusaleksander/ghcertified/fork) the repository** (or use the GitHub web editor).
 
-```bash
-hugo new questions/actions/question-XXX.md
-hugo new questions/admin/question-XXX.md
-hugo new questions/advanced_security/question-XXX.md
-hugo new questions/foundations/question-XXX.md
-hugo new questions/copilot/question-XXX.md
+**2. Create a new file** in the appropriate certification directory.
+Pick the certification and name your file `question-XXX.md`, where `XXX` is the next available number:
+
+| Certification | Directory |
+| ------------- | --------- |
+| Actions | `questions/en/actions/` |
+| Admin | `questions/en/admin/` |
+| Advanced Security | `questions/en/advanced_security/` |
+| Agentic AI Developer | `questions/en/agentic/` |
+| Copilot | `questions/en/copilot/` |
+| Foundations | `questions/en/foundations/` |
+
+**3. Paste the template below** and replace it with your question and answers:
+
+```markdown
+---
+question: "Which GitHub Actions syntax correctly defines a job that runs on Ubuntu?"
+documentation: "https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions"
+---
+
+- [x] `runs-on: ubuntu-latest`
+> (Optional) explanation why this is correct
+- [ ] `os: ubuntu-latest`
+> (Optional) explanation why this is wrong
+- [ ] Github Actions can't run on Ubuntu. Jobs always run on Windows Server machines
+- [ ] `environment: ubuntu-latest`
 ```
 
-For example `hugo new questions/actions/question-084.md`
+- `question` — your question text (required)
+- `documentation` — link to relevant GitHub docs (optional)
+- `[x]` — correct answer(s), `[ ]` — incorrect answers
 
-2) Open the newly created file and fill in the question and answers.
+
+That's all! 🎉 The [Question Writing Guide](questions/README.md) covers advanced features like code blocks, multi-select, answer explanations, and quality tips.
 
 
-### Updating existing content
-If you want to update existing content, simply find the file in the [content/](https://github.com/FidelusAleksander/ghcertified/blob/master/content) directory and edit the markdown file.
+**4. Open a pull request.**
+
+
+## Edit an existing question
+
+Find the file in the [questions/en/](https://github.com/v-fidelusaleksander/ghcertified/blob/main/questions/en) directory and edit the Markdown directly.
+
+## Running the project
+
+Setting up the dev environment is **only needed if you want to work on the website itself** (components, styling, pages). It is not required for adding or editing questions.
+
+### GitHub Codespaces
+
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/v-fidelusaleksander/ghcertified)
+
+Once the Codespace is ready, start the dev server:
+
+```bash
+cd app && npm run dev
+```
+
+### Local setup
+
+1. [Fork](https://github.com/v-fidelusaleksander/ghcertified/fork) the repository
+2. Install [Node.js](https://nodejs.org/) (see `.node-version` for the recommended version)
+3. Install dependencies and start the dev server:
+   ```bash
+   cd app && npm install
+   npm run dev
+   ```
+
+The site will be available at http://localhost:3000.

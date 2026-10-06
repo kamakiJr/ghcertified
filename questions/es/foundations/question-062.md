@@ -1,0 +1,12 @@
+---
+question: "¿Cuál de estos puede hacer un repositorio más detectable?"
+documentation: "https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository"
+---
+
+- [x] Una colección bien elaborada de documentos markdown como `README.md`, `CONTRIBUTING.md` y otros.
+- [x] Darle al repositorio un nombre descriptivo
+- [x] Configurar temas para el repositorio
+- [ ] Definir pipelines de CI/CD adecuados
+- [ ] Cubrir el software del repositorio con pruebas
+- [ ] Usar una amplia variedad de GitHub Apps y GitHub Actions
+

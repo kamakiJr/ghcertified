@@ -1,6 +1,21 @@
-# Hugo default output directory
-/public
-.idea/
-.hugo_build.lock
-nohup.out
+# Next.js build output
+app/.next/
+app/out/
 .DS_Store
+nohup.out
+.playwright-mcp/
+
+# Local environment files
+.env
+.env.*
+!.env.example
+app/.env
+app/.env.*
+!app/.env.example
+
+# Local/private Supabase SQL artifacts
+.local/
+supabase/migrations/
+supabase/seed.sql
+
+.temp/

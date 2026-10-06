@@ -1,9 +1,0 @@
----
-question: "In a workflow with multiple jobs, if job A fails then:"
-title: "Question 013"
----
-
-> https://docs.github.com/en/actions/how-tos/write-workflows/choose-what-workflows-do/use-jobs#defining-prerequisite-jobs
-1. [x] the jobs that are dependent on job A are skipped
-1. [ ] the jobs that are dependent on job A fail
-1. [ ] the workflow immediately cancels all other jobs

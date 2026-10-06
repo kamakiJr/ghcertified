@@ -1,0 +1,9 @@
+---
+question: "¿Cómo analiza el código CodeQL en GitHub?"
+documentation: "https://docs.github.com/en/code-security/concepts/code-scanning/codeql"
+---
+
+- [x] Genera una base de datos de CodeQL y ejecuta consultas para identificar problemas, mostrando los resultados como alertas de análisis de código
+- [ ] Utiliza aprendizaje automático para predecir posibles vulnerabilidades basándose en commits anteriores
+- [ ] Realiza revisiones de código manuales enviadas por miembros de la comunidad de GitHub
+- [ ] Se basa únicamente en herramientas de terceros para el análisis de código

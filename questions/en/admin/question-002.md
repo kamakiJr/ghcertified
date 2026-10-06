@@ -1,0 +1,9 @@
+---
+question: "What is the GitHub Dependabot dependency graph?"
+documentation: "https://docs.github.com/en/code-security/concepts/supply-chain-security/dependency-graph"
+---
+
+- [x] It is a representation of a repository's dependencies and dependents.
+- [ ] There is no such thing as the dependency graph.
+- [ ] It is a tool that automatically proposes version updates to dependencies in a repository.
+- [ ] It is a GitHub maintained list of known vulnerabilities in open source software packages.

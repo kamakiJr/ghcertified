@@ -1,0 +1,11 @@
+---
+question: "Qual evento é acionado por uma ação de webhook fora do repositório?"
+documentation: "https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows"
+---
+
+- [x] repository_dispatch
+- [ ] webhook_dispatch
+- [ ] workflow_dispatch
+- [ ] remote_dispatch
+- [ ] api_dispatch
+

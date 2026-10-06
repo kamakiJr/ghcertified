@@ -1,0 +1,89 @@
+name: Auto Translate UI Strings
+run-name: Auto translate UI strings from ${{ github.sha }}
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "app/messages/en.json"
+
+permissions:
+  contents: write
+  pull-requests: write
+  models: read
+
+jobs:
+  translate:
+    strategy:
+      max-parallel: 1
+      matrix:
+        language:
+          [
+            { code: "pt", name: "Portuguese" },
+            { code: "pl", name: "Polish" },
+            { code: "es", name: "Spanish" },
+            { code: "ja", name: "Japanese" },
+          ]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Build System Prompt
+        id: build-system-prompt
+        uses: skills/action-text-variables@d277ce34621ab00a53db0517d18304a7032453c5 # v4.0.1
+        with:
+          template-file: .github/ui-translation-system-prompt.md
+          template-vars: |
+            targetLanguage: ${{ matrix.language.name }}
+
+      - name: Translate en.json
+        uses: v-fidelusaleksander/prompt-action@5fd22d9e053d49a91cc7d014eddd622bf66b43ad # v2.0.0
+        id: translate
+        with:
+          system-prompt: ${{ steps.build-system-prompt.outputs.updated-text }}
+          prompt-file: app/messages/en.json
+
+      - name: Save translation
+        run: |
+          echo "$TRANSLATED_TEXT" > "app/messages/${{ matrix.language.code }}.json"
+        env:
+          TRANSLATED_TEXT: ${{ steps.translate.outputs.text }}
+
+      - name: Commit changes
+        uses: EndBug/add-and-commit@cc9c08ba6c8df3b93a8f2db63e89b98368ae2ae8 # v11.1.1
+        with:
+          add: "app/messages/${{ matrix.language.code }}.json"
+          message: "i18n: translate UI strings to ${{ matrix.language.name }}"
+          push: true
+          new_branch: i18n/auto-translate-ui-${{ github.sha }}
+
+  create-pr:
+    needs: translate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+      # Generate a GitHub App token for PR creation so that downstream workflows
+      # (e.g. pr-checks) are triggered. PRs created with the default GITHUB_TOKEN
+      # do not trigger subsequent workflow runs.
+      - name: Generate GitHub App Token
+        id: app-token
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
+        with:
+          client-id: ${{ secrets.AUTO_TRANSLATE_APP_CLIENT_ID }}
+          private-key: ${{ secrets.AUTO_TRANSLATE_APP_PRIVATE_KEY }}
+      - name: Create Pull Request
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+        run: |
+          gh pr create \
+            --title "i18n: auto-translate UI strings" \
+            --body "This PR updates UI translations for all locales based on changes to \`app/messages/en.json\` from commit ${{ github.sha }}." \
+            --label translations \
+            --base main \
+            --head i18n/auto-translate-ui-${{ github.sha }}
+
+          gh pr merge --auto --squash i18n/auto-translate-ui-${{ github.sha }}

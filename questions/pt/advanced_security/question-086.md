@@ -1,0 +1,9 @@
+---
+question: "Quando um workflow do GitHub Actions de análise CodeQL detecta uma nova vulnerabilidade em um pull request, onde você pode encontrar as informações sobre essa vulnerabilidade?"
+documentation: "https://docs.github.com/en/code-security/code-scanning/managing-code-scanning-alerts/triaging-code-scanning-alerts-in-pull-requests#about-code-scanning-results-on-pull-requests"
+---
+
+- [x] Diretamente no pull request, na forma de um comentário no PR e uma falha de verificação
+- [ ] Na aba de segurança do repositório
+- [ ] Nos logs da execução do workflow
+- [ ] O workflow de análise CodeQL falhará e produzirá um artefato com os resultados

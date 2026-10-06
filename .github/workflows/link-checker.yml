@@ -1,24 +1,89 @@
 name: Links
 
 on:
+  workflow_dispatch: 
   schedule:
-    - cron: "0 6 * * *"
+    - cron: "0 6 1 * *"
+      timezone: "Europe/Warsaw"
+  pull_request:
+    paths:
+      - .github/workflows/link-checker.yml
+
+permissions:
+  contents: write
+  pull-requests: write
+  copilot-requests: write
+
+env:
+  LYCHEE_REPORT_PATH: lychee/out.md
+  COPILOT_SUMMARY_PATH: summary.md
+  COPILOT_MAX_AI_CREDITS: 100
 
 jobs:
   check-links:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        exam: [actions, admin, advanced_security, agentic, copilot, foundations]
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - name: Link Checker
         id: lychee
-        uses: lycheeverse/lychee-action@v2.7.0
+        uses: lycheeverse/lychee-action@e7477775783ea5526144ba13e8db5eec57747ce8 # v2.9.0
         with:
-          args: --verbose --no-progress './**/*.md' './**/*.html' --exclude-all-private --exclude 'file:///*'
+          fail: false
+          output: ${{ env.LYCHEE_REPORT_PATH }}
+          args: --verbose --no-progress './**/*.md' --exclude-all-private --exclude 'file:///*'
+          workingDirectory: questions/en/${{ matrix.exam }}
 
-      - name: Create Issue From File
-        if: env.lychee_exit_code != 0
-        uses: peter-evans/create-issue-from-file@v6
+      - name: Install Copilot CLI
+        if: github.event_name != 'pull_request'
+        run: npm install -g @github/copilot
+
+      - name: Fix links with Copilot
+        if: github.event_name != 'pull_request'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          copilot -p "Read the lychee link-checker report at questions/en/${{ matrix.exam }}/${{ env.LYCHEE_REPORT_PATH }}.
+          Only edit files under questions/en/${{ matrix.exam }}/ (never other exam or language dirs).
+
+          For each REDIRECTED link, replace it with the final resolved URL already shown
+          in the report.
+
+          For each BROKEN (4xx/5xx) link, try to find the correct replacement before giving up:
+          - Use the context7 MCP tools to look up the relevant library/product docs and find
+            the page that replaced it.
+          - Or fetch the linked domain's search/nearby pages to locate the moved content.
+          - Verify the replacement URL actually resolves (200 OK) before using it.
+          Only replace the link if you're confident the replacement covers the same content.
+          Otherwise leave it unchanged and list it as unresolved.
+
+          Don't change anything else in the files.
+          When done, write the summary to 
+          ${{ github.workspace }}/${{ env.COPILOT_SUMMARY_PATH }} in this format:
+
+          A top-level heading '## 🔗 Link Checker Summary — ${{ matrix.exam }}', then a small
+          stats table with columns Type | Fixed | Unresolved and one row per link type
+          (e.g. '🔀 Redirect', '🚫 Broken') plus a bold Total row. Do NOT list individual
+          fixed links or their URLs anywhere.
+
+          Then, only if there are unresolved links, a '### ⚠️ Unresolved links' heading
+          followed by a table with columns Question | Broken URL, one row per unresolved
+          link (Question = filepath only, e.g. questions/en/${{ matrix.exam }}/question-050.md).
+
+          No other commentary before, between, or after these sections." \
+            --allow-tool=shell --allow-tool=write --allow-tool=context7 --allow-all-urls --no-ask-user --max-ai-credits=${{ env.COPILOT_MAX_AI_CREDITS }}
+
+      - name: Open PR with fixes
+        if: github.event_name != 'pull_request'
+        uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8.1.1
         with:
-          title: Link Checker Report
-          content-filepath: ./lychee/out.md
-          labels: good first issue, bug
+          add-paths: |
+            questions/en/${{ matrix.exam }}/question-*.md
+          branch: fix/link-checker-${{ matrix.exam }}
+          title: "fix: broken/redirected links in ${{ matrix.exam }}"
+          body-path: ${{ github.workspace }}/${{ env.COPILOT_SUMMARY_PATH }}
+          labels: link-checker
+          
